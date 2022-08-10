@@ -10,9 +10,10 @@ Any issues regarding the micro:bit are gathered on the [lancaster-university/cod
 # Installation
 You need some open source pre-requisites to build this repo. You can either install these tools yourself, or use the docker image provided below.
 
-- [GNU Arm Embedded Toolchain](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads)
-- [Github desktop](https://desktop.github.com/)
-- [CMake](https://cmake.org/download/)
+- [Yotta](http://docs.yottabuild.org/#installing)
+- brew install srecord
+- yt target bbc-microbit-classic-gcc
+- [ARM mbed](https://os.mbed.com/)
 - [Python 3](https://www.python.org/downloads/)
 
 We use Ubuntu Linux for most of our tests. You can also install these tools easily through the package manager:
