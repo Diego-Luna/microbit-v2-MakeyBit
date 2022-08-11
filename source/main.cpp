@@ -173,8 +173,9 @@ int main()
     stopMotor('A');
     stopMotor('B');
 
-    int min = 70;
-    int max = 100;
+    int min = -2;
+    int max = 2;
+    int power = 690;
 
     while (1)
     {
@@ -185,8 +186,8 @@ int main()
         {
             if (stado != 0)
             {
-                disableMotors();
                 fullStop();
+                disableMotors();
                 stado = 0;
             }
         }
@@ -195,7 +196,7 @@ int main()
             if (stado != 1)
             {
                 enableMotors();
-                move(1, 600);
+                move(1, power);
                 stado = 1;
                 old_value_z = value_z;
             }
@@ -205,16 +206,9 @@ int main()
             if (stado != 2)
             {
                 enableMotors();
-                move(2, 600);
+                move(2, power);
                 stado = 2;
                 old_value_z = value_z;
-            }
-
-            if (value_z < -350)
-            {
-                disableMotors();
-                fullStop();
-                stado = 2;
             }
         }
     }
