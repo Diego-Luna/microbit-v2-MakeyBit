@@ -154,8 +154,6 @@ void move(int direction, int speed)
     }
     if (direction == 2)
     {
-        // moveMotorBackward(speed, 'A');
-        // moveMotorBackward(speed, 'B');
         moveMotorBackwardALL(speed);
     }
 }
