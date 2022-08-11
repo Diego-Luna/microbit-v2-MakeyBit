@@ -13,7 +13,7 @@ You need some open source pre-requisites to build this repo. You can either inst
 - [Yotta](http://docs.yottabuild.org/#installing)
 - brew install srecord
 - yt target bbc-microbit-classic-gcc
-- [ARM mbed](https://os.mbed.com/)
+- [ARM mbed](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
 - [Python 3](https://www.python.org/downloads/)
 
 We use Ubuntu Linux for most of our tests. You can also install these tools easily through the package manager:
