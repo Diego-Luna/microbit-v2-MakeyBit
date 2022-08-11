@@ -8,6 +8,7 @@ MicroBit uBit;
 
 // accelerometer
 int value_z;
+int old_value_z;
 int stado = 0;
 
 // motor
@@ -61,14 +62,12 @@ void stopMotor(char str)
 void moveMotorForward(int speed, char str)
 {
 
-    // uBit.serial.printf("\n en moveMotorForward ");
     if (str == 'A')
     {
         uBit.io.P14.setAnalogValue(0);
         uBit.io.P13.setAnalogValue(speed);
 
         uBit.io.P20.setAnalogValue(200);
-        // uBit.serial.printf("\n str == 'A' ");
     }
     else if (str == 'B')
     {
@@ -76,13 +75,10 @@ void moveMotorForward(int speed, char str)
         uBit.io.P16.setAnalogValue(speed);
 
         uBit.io.P19.setAnalogValue(200);
-        // uBit.serial.printf("\n str == 'B' ");
     }
 }
 void moveMotorForwardALL(int speed)
 {
-
-    // uBit.serial.printf("\n en ForwardALL ");
 
     uBit.io.P14.setAnalogValue(0);
     uBit.io.P15.setAnalogValue(0);
@@ -96,7 +92,6 @@ void moveMotorForwardALL(int speed)
 
 void moveMotorBackwardALL(int speed)
 {
-    // uBit.serial.printf("\n en BackwardALL ");
 
     uBit.io.P13.setAnalogValue(0);
     uBit.io.P16.setAnalogValue(0);
@@ -110,14 +105,12 @@ void moveMotorBackwardALL(int speed)
 
 void moveMotorBackward(int speed, char str)
 {
-    // uBit.serial.printf("\n en moveMotorBackward ");
     if (str == 'A')
     {
         uBit.io.P14.setAnalogValue(speed);
         uBit.io.P13.setAnalogValue(0);
 
         uBit.io.P20.setAnalogValue(200);
-        // uBit.serial.printf("\n str == 'A' ");
     }
     else if (str == 'B')
     {
@@ -125,7 +118,6 @@ void moveMotorBackward(int speed, char str)
         uBit.io.P16.setAnalogValue(0);
 
         uBit.io.P19.setAnalogValue(200);
-        // uBit.serial.printf("\n str == 'B' ");
     }
 }
 
@@ -183,15 +175,16 @@ int main()
     stopMotor('A');
     stopMotor('B');
 
+    int min = 70;
+    int max = 100;
+
     while (1)
     {
         // uBit.serial.printf("\n value z : %d", uBit.accelerometer.getZ());
         value_z = uBit.accelerometer.getZ();
 
-        // if (value_z > -100 && value_z < 100)
-        if (value_z > -50 && value_z < 50)
+        if (value_z >= min && value_z <= max)
         {
-            // uBit.serial.printf("\n OK : %d", uBit.accelerometer.getZ());
             if (stado != 0)
             {
                 disableMotors();
@@ -199,41 +192,32 @@ int main()
                 stado = 0;
             }
         }
-        // else if (value_z >= 100)
-        else if (value_z >= 50)
+        else if (value_z >= max)
         {
-            // uBit.serial.printf("\n Acia atras : %d", uBit.accelerometer.getZ());
             if (stado != 1)
             {
                 enableMotors();
-                // move(1, value_z * 3);
-                move(1, 700 + value_z);
+                move(1, 600);
                 stado = 1;
+                old_value_z = value_z;
             }
         }
-        // else if (value_z <= -100)
-        else if (value_z <= -50)
+        else if (value_z <= min)
         {
-            // uBit.serial.printf("\n Acia delante : %d", uBit.accelerometer.getZ());
             if (stado != 2)
             {
                 enableMotors();
-                // move(2, value_z * 3);
-                move(2, 700 + (value_z * -1));
+                move(2, 600);
+                stado = 2;
+                old_value_z = value_z;
+            }
+
+            if (value_z < -350)
+            {
+                disableMotors();
+                fullStop();
                 stado = 2;
             }
         }
-
-        // moveMotorBackward(300,'B');
-        // moveMotorBackward(300,'A');
-        // moveMotorForward(300, 'B');
-        // moveMotorForward(300,'A');
-        // move(2, value_z);
-        // uBit.io.P14.setAnalogValue(900);
-        // uBit.io.P13.setAnalogValue(0);
-        // uBit.io.P20.setAnalogValue(20);
-        // move(forward, 180);
-        // uBit.sleep(100);
-        // uBit.sleep(40);
     }
 }
